@@ -70,7 +70,7 @@ del vector.
 */
 void Imagen::set(int y, int x, byte v){
    if(y<nfilas && x<ncolumnas)
-      datos[ncolumnas*x + y] = v;
+      datos[ncolumnas*y + x] = v;
 }
    
    
@@ -85,7 +85,7 @@ como un vector, la posición (@a x,@a y) corresponde a la posición @a y * @c nc
 del vector.    
 */
 byte Imagen::get(int y, int x) {
-   return datos[ncolumnas*x + y];
+   return datos[ncolumnas*y + x];
 }
    
 /**
