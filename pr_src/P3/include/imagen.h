@@ -15,6 +15,7 @@ typedef unsigned char byte; ///< byte = 8bits almacenado en un unsigned char
 class Imagen{
 private:
    static const int MAXPIXELS = 1000000;  ///< número máximo de píxeles que podemos almacenar 
+   static const int BITDEPTH = 256;
    byte datos[MAXPIXELS];///< datos de la imagen
    int nfilas; 			///< número de filas de la imagen
    int ncolumnas;		///< número de columnsa de la imagen
@@ -127,6 +128,11 @@ Lee desde disco los datos de la imagen llamada @a nombreFichero y la guarda en l
 @retval false 	si se ha producido algún error en la escritura
 */
    bool escribirImagen(const char nombreFichero[], bool esBinario); 
+
+
+   Imagen plano(int k);
+
+   bool aArteASCII(const char grises[], char arteASCII[], int maxlong);
 };
 
 #endif

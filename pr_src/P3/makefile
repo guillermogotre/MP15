@@ -11,22 +11,44 @@ CPPFLAGS = -Wall -g -c -I$(INC)
 
 all: $(BIN)/arteASCII $(BIN)/testarteASCII $(BIN)/testplano $(BIN)/testimagen
 
-$(BIN)/testimagen: $(LIB)/libimagen.a $(OBJ)/testimagen.o
-	g++ -o $(BIN)/testimagen $(OBJ)/testimagen.o -limagen -L$(LIB)
+$(BIN)/arteASCII: $(LIB)/libimagen.a $(OBJ)/arteASCII.o
+	$(CXX) -o $(BIN)/arteASCII $(OBJ)/arteASCII.o -limagen -L$(LIB)
 
-$(OBJ)/testimagen.o: $(SRC)/testimagen.cpp
-	g++ -c -o $(OBJ)/testimagen.o $(SRC)/testimagen.cpp -I$(INC)
+$(BIN)/testarteASCII: $(LIB)/libimagen.a $(OBJ)/testarteASCII.o
+	$(CXX) -o $(BIN)/testarteASCII $(OBJ)/testarteASCII.o -limagen -L$(LIB)
 
-$(LIB)/libimagen.a: $(OBJ)/pgm.o $(OBJ)/imagen.o
-	ar rvs $(LIB)/libimagen.a $(OBJ)/pgm.o $(OBJ)/imagen.o
+$(BIN)/testplano: $(LIB)/libimagen.a $(OBJ)/testplano.o
+	$(CXX) -o $(BIN)/testplano $(OBJ)/testplano.o -limagen -L$(LIB)
+
+$(BIN)/testimagen: $(LIB)/libimagen.a $(OBJ)/testimagen.o 
+	$(CXX) -o $(BIN)/testimagen $(OBJ)/testimagen.o -limagen -L$(LIB)
+
+$(OBJ)/testimagen.o: $(SRC)/testimagen.cpp $(INC)/imagen.h
+	$(CXX) $(CPPFLAGS) -o $(OBJ)/testimagen.o $(SRC)/testimagen.cpp 
+
+$(OBJ)/testplano.o: $(SRC)/testplano.cpp $(INC)/imagen.h
+	$(CXX) $(CPPFLAGS) -o $(OBJ)/testplano.o $(SRC)/testplano.cpp 
+
+$(OBJ)/testarteASCII.o: $(SRC)/testarteASCII.cpp $(INC)/imagen.h
+	$(CXX) $(CPPFLAGS) -o $(OBJ)/testarteASCII.o $(SRC)/testarteASCII.cpp 
+
+$(OBJ)/arteASCII.o: $(SRC)/arteASCII.cpp $(INC)/imagen.h
+	$(CXX) $(CPPFLAGS) -o $(OBJ)/arteASCII.o $(SRC)/arteASCII.cpp 
+
+$(LIB)/libimagen.a: $(OBJ)/pgm.o $(OBJ)/imagen.o $(OBJ)/byte.o
+	ar rvs $(LIB)/libimagen.a $(OBJ)/pgm.o $(OBJ)/imagen.o $(OBJ)/byte.o
 
 $(OBJ)/pgm.o: $(SRC)/pgm.cpp $(INC)/pgm.h
-	g++ -c $(SRC)/pgm.cpp -o $(OBJ)/pgm.o -I$(INC)
+	$(CXX) $(CPPFLAGS) $(SRC)/pgm.cpp -o $(OBJ)/pgm.o 
 
-$(OBJ)/imagen.o: $(SRC)/imagen.cpp $(INC)/imagen.h
-	g++ -c $(SRC)/imagen.cpp -o $(OBJ)/imagen.o -I$(INC)
+$(OBJ)/imagen.o: $(SRC)/imagen.cpp $(INC)/imagen.h $(INC)/pgm.h $(INC)/byte.h
+	$(CXX) $(CPPFLAGS) $(SRC)/imagen.cpp -o $(OBJ)/imagen.o
+
+$(OBJ)/byte.o: $(SRC)/byte.cpp
+	$(CXX) $(CPPFLAGS) $(SRC)/byte.cpp -o $(OBJ)/byte.o
+
 rmimages:
-	rm *.pgm
+	rm -f *.pgm *.txt
 clean:
 	rm -f $(OBJ)/*.o $(LIB)/*.a
 mrproper: clean rmimages
