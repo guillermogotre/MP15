@@ -62,14 +62,14 @@ bool Imagen::escribirImagen(const char nombreFichero[], bool esBinario){
 
 Imagen Imagen::plano(int k){
    Imagen nueva_imagen(nfilas, ncolumnas);
-   for(int i=0; i<ncolumnas; i++){
-      for(int j=0; j<nfilas; j++){
-         byte pixel = get(j,i);
+   for(int i=0; i<nfilas; i++){
+      for(int j=0; j<ncolumnas; j++){
+         byte pixel = get(i,j);
          bool is_one = getbit(pixel, k);
          apagar(pixel);
          if(is_one)
             on(pixel,7);
-         nueva_imagen.set(j,i,pixel);
+         nueva_imagen.set(i,j,pixel);
       }
    }
    return nueva_imagen;
@@ -80,8 +80,8 @@ bool Imagen::aArteASCII(const char grises[], char arteASCII[], int maxlong){
    int pos = 0,
       length = strlen(grises);
    if(success){
-      for(int i=0; i<ncolumnas; i++){
-         for(int j=0; j<nfilas; j++){
+      for(int i=0; i<nfilas; i++){
+         for(int j=0; j<ncolumnas; j++){
             arteASCII[pos++] = grises[1*get(i,j)*length/BITDEPTH];
          }
          arteASCII[pos++]='\n';
