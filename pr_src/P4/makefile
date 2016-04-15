@@ -47,11 +47,9 @@ $(OBJ)/imagen.o: $(SRC)/imagen.cpp $(INC)/imagen.h $(INC)/pgm.h $(INC)/byte.h
 $(OBJ)/byte.o: $(SRC)/byte.cpp
 	$(CXX) $(CPPFLAGS) $(SRC)/byte.cpp -o $(OBJ)/byte.o
 
-rmimages:
-	rm -f *.pgm *.txt
 clean:
 	rm -f $(OBJ)/*.o $(LIB)/*.a
-mrproper: clean rmimages
+mrproper: clean
 	rm -f $(BIN)/*
 
 	
