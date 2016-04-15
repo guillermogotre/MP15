@@ -7,7 +7,6 @@
   */
 
 #include <pgm.h>
-#include <iostream>
 
 
 TipoImagen LeerTipo(ifstream& f)

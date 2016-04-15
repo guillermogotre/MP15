@@ -1,5 +1,4 @@
 #include <imagen.h>
-#include <iostream>
 
 Imagen::Imagen(){
    nfilas = 0;
